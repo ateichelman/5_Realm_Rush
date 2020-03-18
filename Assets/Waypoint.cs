@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Block : MonoBehaviour {
+public class Waypoint : MonoBehaviour {
 	// Temporary, used to give blocks a "Block" tag.
 
 	// Use this for initialization
