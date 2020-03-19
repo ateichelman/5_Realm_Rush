@@ -5,13 +5,18 @@ using UnityEngine;
 public class Waypoint : MonoBehaviour {
 	// Temporary, used to give blocks a "Block" tag.
 
-	// Use this for initialization
-	void Start () {
-		
+		const int gridSize = 10;
+
+		Vector2Int gridPos;
+
+	public Vector2 GetGridPos(){
+		return new Vector2Int(
+			Mathf.RoundToInt(transform.position.x / gridSize) * gridSize, 
+			Mathf.RoundToInt(transform.position.z / gridSize) * gridSize
+		);
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public int GetGridSize(){
+		return gridSize;
 	}
 }

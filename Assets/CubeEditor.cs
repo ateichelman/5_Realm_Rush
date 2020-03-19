@@ -4,32 +4,40 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 [SelectionBase]
-public class CubeEditor : MonoBehaviour {
-	
-	[SerializeField] [Range(1f, 20f)] float gridSize = 10f;
+public class CubeEditor : MonoBehaviour
+{
+    Waypoint waypoint;
 
-	TextMesh textMesh;
+    // Use this for initialization
+    private void Awake()
+    {
+        // Debug.Log("Editor causes this Awake");
 
-	// Use this for initialization
-	void Start () {
-		// Debug.Log("Editor causes this Awake");
+        waypoint = GetComponent<Waypoint>();
+    }
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		//Debug.Log("Editor causes this Update");
-		Vector3 snapPos;
-		snapPos.x = Mathf.RoundToInt(transform.position.x / gridSize) * gridSize;
+    // Update is called once per frame
+    void Update()
+    {
+        snapToGrid();
+        UpdateLabel();
+    }
 
-		snapPos.z = Mathf.RoundToInt(transform.position.z / gridSize) * gridSize;
+    private void snapToGrid()
+    {
+        //Debug.Log("Editor causes this Update");
+        transform.position = new Vector3(
+            waypoint.GetGridPos().x,
+            0f,
+            waypoint.GetGridPos().y);
+    }
 
-		transform.position = new Vector3(snapPos.x, 0f, snapPos.z);
-
-		textMesh = GetComponentInChildren<TextMesh>(); // Breaks if we have more than 1 text mesh in children
-		string labelText = snapPos.x / gridSize + ", " + snapPos.z / gridSize;
-		textMesh.text = labelText;
-		gameObject.name = labelText;
-		
-	}
+    private void UpdateLabel()
+    {
+        int gridSize = waypoint.GetGridSize();
+        TextMesh textMesh = GetComponentInChildren<TextMesh>(); // Breaks if we have more than 1 text mesh in children
+        string labelText = waypoint.GetGridPos().x / gridSize + ", " + waypoint.GetGridPos().y / gridSize;
+        textMesh.text = labelText;
+        gameObject.name = labelText;
+    }
 }
